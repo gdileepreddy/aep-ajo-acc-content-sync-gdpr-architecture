@@ -1,0 +1,24 @@
+         Data Engineering
+               |
+               v
+             ┌───┐
+             │AEP│ (schema, C/I/S enforcement)
+             └─┬─┘
+         ┌──────┴──────┐
+         │             │
+       AJO            ACC
+     (real-time)     (batch)
+         │             │
+         └──┬────┬─────┘
+            │    │
+            v    v
+        ┌────────────┐
+        │ Webhook /  │
+        │ ConsentSvc │
+        └────┬───────┘
+             │
+             v
+            AEP (streaming update)
+             │
+             v
+            CJA (hashed / consent-safe)
