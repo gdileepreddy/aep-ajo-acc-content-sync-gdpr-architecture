@@ -1,0 +1,11 @@
+1. DE sends dataset (XDM columns + C/I/S labels)
+2. AEP ingestion pipeline applies label rules
+3. If C3 or S1 => mark record restricted (mask PII, exclude from stitching)
+4. Build Identity Graph only for allowed records
+5. Create segments: RT (AJO) and Batch (ACC)
+6. Activation: AJO sends RT, ACC consumes daily batch
+7. User opts out in AJO -> custom action POST /webhook/consent
+8. Consent Service updates master consent, streams to AEP, writes ACC override
+9. ACC processes override before main batch (pre-send suppression)
+10. If ACC opt-out found, ACC posts to webhook -> Consent Service -> AEP -> AJO reevaluate
+11. All events + hashed ids pushed to CJA for compliant analytics
