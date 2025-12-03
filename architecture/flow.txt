@@ -1,9 +1,5 @@
-Data Engineering → AEP Ingestion
-AEP → Identity service (only allowed fields stitched)
-AEP → Segmentation
-Segment A (<100k) → AJO
-Segment B (~700k) → ACC
-AJO → Webhook → Node Service → AEP
-ACC → Webhook → Node Service → AEP
-AEP → CJA (governed profile + consent + events)
-CJA → Dashboards for analytics
+Data Engineering -> AEP (XDM ingest + gating by C/I/S labels)
+AEP allowed profiles -> segments -> AJO (RT) or ACC (Batch)
+AJO unsubscribe -> webhook -> Consent Service -> AEP update -> ACC override
+ACC unsubscribe -> webhook -> Consent Service -> AEP update -> AJO reevaluate
+AEP -> CJA (hashed ids + consent states + events)
