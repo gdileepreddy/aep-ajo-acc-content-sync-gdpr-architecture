@@ -1,0 +1,16 @@
+# CODEOWNERS
+# This file defines responsibility and ownership for the conceptual AEP → AJO → ACC → CJA
+# GDPR-compliant content synchronization architecture.
+
+# Repo owner
+*       @gdileepreddy
+
+# Architecture documentation
+/docs/  @gdileepreddy
+
+# Root-level architectural assets and diagrams
+/*.png  @gdileepreddy
+/*.md   @gdileepreddy
+
+# Webhook reference implementation (sample)
+ /webhook-service/  @gdileepreddy
