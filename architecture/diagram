@@ -1,24 +1,30 @@
-         Data Engineering
-               |
-               v
-             ┌───┐
-             │AEP│ (schema, C/I/S enforcement)
-             └─┬─┘
-         ┌──────┴──────┐
-         │             │
-       AJO            ACC
-     (real-time)     (batch)
-         │             │
-         └──┬────┬─────┘
-            │    │
-            v    v
-        ┌────────────┐
-        │ Webhook /  │
-        │ ConsentSvc │
-        └────┬───────┘
-             │
-             v
-            AEP (streaming update)
-             │
-             v
-            CJA (hashed / consent-safe)
+             ┌──────────────────────┐
+             │   Data Engineering   │
+             └──────────┬───────────┘
+                        |
+                        ▼
+         ┌───────────────────────────────────┐
+         │   Adobe Experience Platform (AEP) │
+         │  C1 C2 C3 | I1 I2 | S1 S2 S3      │
+         │  Profile + Segments               │
+         └──────┬─────────────┬──────────────┘
+                |             |
+       Real-time|             | Batch
+                ▼             ▼
+  ┌──────────────────┐   ┌──────────────────┐
+  │ Adobe Journey     │   │ Adobe Campaign   │
+  │ Optimizer (AJO)   │   │ Classic (ACC)    │
+  └──────────┬────────┘   └──────────┬───────┘
+             |                       |
+             | Webhook opt-outs      | Batch opt-outs
+             |                       |
+             ▼                       ▼
+        ┌────────────────────────────────────┐
+        │ Sync back into AEP (Consent Store) │
+        └──────────┬─────────────────────────┘
+                   |
+                   ▼
+     ┌─────────────────────────────────┐
+     │ Customer Journey Analytics (CJA) │
+     │  Dashboards + KPIs + Attribution │
+     └─────────────────────────────────┘
