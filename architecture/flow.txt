@@ -1,0 +1,9 @@
+Data Engineering → AEP Ingestion
+AEP → Identity service (only allowed fields stitched)
+AEP → Segmentation
+Segment A (<100k) → AJO
+Segment B (~700k) → ACC
+AJO → Webhook → Node Service → AEP
+ACC → Webhook → Node Service → AEP
+AEP → CJA (governed profile + consent + events)
+CJA → Dashboards for analytics
