@@ -1,27 +1,20 @@
-# GDPR-Compliant Consent Sync Architecture Across AEP, AJO, ACC & CJA
+# AEP–AJO–ACC Consent Sync Architecture
+GDPR-aware, end-to-end consent & identity governance for Adobe Experience Cloud
+(Designed for Retail Banking)
 
-This repository provides an end-to-end reference architecture that solves the challenge of synchronizing customer consent in real time (AJO) and batch (ACC) 
-while maintaining GDPR compliance and delivering analytics via CJA.
+This repository contains:
+- AEP XDM column mappings (C/I/S labels)
+- Segment definitions for AJO (real-time) and ACC (batch)
+- Webhook microservice (Node.js) to sync opt-outs bi-directionally
+- ACC override file handling
+- CJA dataset and metrics guidance
+- ASCII architecture diagrams and sequence
 
-# Use Case (Retail Banking)
+Key rule: If **C3** (contractual no-combine) OR **S1** (sensitive) is set on a record, that record MUST be excluded from identity stitching and from any marketing activation. Profiles may be stored in restricted datasets for audit only.
 
-Banks often run:
-- Real-time communication via **AJO**
-- Batch campaigns via **ACC**
-- Identity & consent governance in **AEP**
-- Analytics and marketing intelligence in **CJA**
-
-The problem:
-- Opt-outs in AJO should update AEP immediately before ACC runs
-- Opt-outs in ACC should update AEP immediately before AJO triggers
-- Some data values (S1, C3) cannot be stitched into AEP profile
-- CJA only consumes AEP data, not ACC logs
-
-This repo solves it using:
-- AEP as source of truth
-- A webhook microservice
-- AJO Custom Action API calls
-- ACC workflow HTTP API calls
-- AEP Consent API
-- GDPR-aware schema design
-
+Deploy:
+1. Deploy webhook-service (AWS Lambda / GCP / Azure / Node host)
+2. Configure AJO custom action to POST to webhook
+3. Configure ACC workflow to POST to webhook when unsubscribes are extracted
+4. Ensure AEP streaming/ingest API updates profiles
+5. CJA reads only hashed/approved profile/event datasets
